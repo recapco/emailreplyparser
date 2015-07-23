@@ -1,5 +1,7 @@
 # Email Reply Parser for Go
 
+[![Build Status][travis-image]][travis-url] [![Coverage][coveralls-image]][coveralls-url] [![GoDoc][godoc-image]][godoc-url]
+
 A Go port of GitHub's [Email Reply Parser][email_reply_parser] library. The 
 library is used to strip away non essential content from email bodies. An 
 example use case is to allow email replies to comments without including 
@@ -71,3 +73,12 @@ Please feel to submit Pull Requests and Issues.
 
 [email_reply_parser]: https://github.com/github/email_reply_parser
 [license]: https://github.com/recapco/emailreplyparser/blob/master/LICENSE
+
+[travis-url]: http://travis-ci.org/recapco/emailreplyparser
+[travis-image]: http://img.shields.io/travis/recapco/emailreplyparser/master.svg?style=flat-square
+
+[coveralls-url]: https://coveralls.io/r/recapco/emailreplyparser
+[coveralls-image]: https://img.shields.io/coveralls/recapco/emailreplyparser/master.svg?style=flat-square
+
+[godoc-url]: https://godoc.org/github.com/recapco/emailreplyparser
+[godoc-image]: https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square
