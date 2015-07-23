@@ -2,14 +2,16 @@
 
 [![Build Status][travis-image]][travis-url] [![Coverage][coveralls-image]][coveralls-url] [![GoDoc][godoc-image]][godoc-url]
 
-A Go port of GitHub's [Email Reply Parser][email_reply_parser] library. The 
-library is used to strip away non essential content from email bodies. An 
-example use case is to allow email replies to comments without including 
-signatures or extra noise.
+A Go port of GitHub's [Email Reply Parser][email_reply_parser] library. The
+library parses an email body into fragments, marking the fragments as quoted or
+as part of a signature as appropriate.
+
+The most common use case is to get the text of a reply while ignoring signatures
+and the quoted original email. It properly parses top, bottom and inline replies.
 
 ## Installation
 
-To install `emailreplyparser` run the standard installation:
+To install `emailreplyparser` run:
 
 ```sh
 go get github.com/recapco/emailreplyparser
@@ -17,7 +19,7 @@ go get github.com/recapco/emailreplyparser
 
 ## Usage
 
-The library can be used to get the essential text of body with following example:
+The library can be used to get the reply text from an email body as such:
 
 ```go
 reply, err := emailreplyparser.ParseReply(emailBody)
@@ -31,29 +33,33 @@ func Signature(text string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	for _, fragment := range email.Fragments {
 		if fragment.Signature {
 			return fragment.String(), nil
 		}
 	}
+
 	return "", nil
 }
 ```
 
-The library can also help discover quotes in an email. For example:
+The library can also help discover quoted segments in an email. For example:
 
 ```go
 func Quotes(text string) ([]string, error) {
 	email, err := emailreplyparser.Read(text)
 	if err != nil {
-		return [], err
+		return nil, err
 	}
+
 	var quotes []string
 	for _, fragment := range email.Fragments {
 		if fragment.Quoted {
 			quotes = append(quotes, fragment.String())
 		}
 	}
+
 	return quotes, nil
 }
 ```
@@ -65,7 +71,7 @@ Building and testing follow the normal Go conventions of `go build` and
 
 ## Contributing
 
-Please feel to submit Pull Requests and Issues.
+Please feel free to submit pull requests and issues.
 
 ## License
 
