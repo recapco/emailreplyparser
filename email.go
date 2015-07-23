@@ -7,6 +7,7 @@ import (
 	"unicode"
 )
 
+// Read reads a text string and creates a new Email struct.
 func Read(text string) (*Email, error) {
 	e := &Email{}
 
@@ -18,6 +19,7 @@ func Read(text string) (*Email, error) {
 	return e, nil
 }
 
+// ParseReply parses a text string and returns the parsed reply string.
 func ParseReply(text string) (string, error) {
 	e := Email{}
 
@@ -29,6 +31,7 @@ func ParseReply(text string) (string, error) {
 	return e.VisibleText(), nil
 }
 
+// Email is a container of text Fragments
 type Email struct {
 	Fragments []*Fragment
 
@@ -36,6 +39,7 @@ type Email struct {
 	foundVisible bool
 }
 
+// VisibleText returns the text of all non hidden fragments in the email.
 func (e *Email) VisibleText() string {
 	var fragmentStrings []string
 	for _, fragment := range e.Fragments {
@@ -132,6 +136,7 @@ func (e *Email) finishFragment() {
 	}
 }
 
+// Fragment is a part of an email which has metadata and contents.
 type Fragment struct {
 	Quoted    bool
 	Signature bool

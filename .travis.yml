@@ -1,0 +1,12 @@
+language: go
+go:
+- 1.4
+sudo: false
+before_install:
+- go get golang.org/x/tools/cmd/cover
+- go get github.com/mattn/goveralls
+script:
+- go test -covermode=count -coverprofile=profile.cov
+- goveralls -coverprofile=profile.cov -service=travis-ci
+notifications:
+  email: false
