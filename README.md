@@ -1,12 +1,73 @@
 # Email Reply Parser for Go
-A Go port of GitHub's [Email Reply Parser](https://github.com/github/email_reply_parser) library.
+
+A Go port of GitHub's [Email Reply Parser][email_reply_parser] library. The 
+library is used to strip away non essential content from email bodies. An 
+example use case is to allow email replies to comments without including 
+signatures or extra noise.
+
+## Installation
+
+To install `emailreplyparser` run the standard installation:
+
+```sh
+go get github.com/recapco/emailreplyparser
+```
 
 ## Usage
-To parse out the reply body:
+
+The library can be used to get the essential text of body with following example:
 
 ```go
 reply, err := emailreplyparser.ParseReply(emailBody)
 ```
 
-## Installation
-`go get github.com/recapco/emailreplyparser`
+The library can also be used to retrieve the signature. For example:
+
+```go
+func Signature(text string) (string, error) {
+	email, err := emailreplyparser.Read(text)
+	if err != nil {
+		return "", err
+	}
+	for _, fragment := range email.Fragments {
+		if fragment.Signature {
+			return fragment.String(), nil
+		}
+	}
+	return "", nil
+}
+```
+
+The library can also help discover quotes in an email. For example:
+
+```go
+func Quotes(text string) ([]string, error) {
+	email, err := emailreplyparser.Read(text)
+	if err != nil {
+		return [], err
+	}
+	var quotes []string
+	for _, fragment := range email.Fragments {
+		if fragment.Quoted {
+			quotes = append(quotes, fragment.String())
+		}
+	}
+	return quotes, nil
+}
+```
+
+## Building and Testing
+
+Building and testing follow the normal Go conventions of `go build` and 
+`go test`.
+
+## Contributing
+
+Please feel to submit Pull Requests and Issues.
+
+## License
+
+[MIT][license]
+
+[email_reply_parser]: https://github.com/github/email_reply_parser
+[license]: https://github.com/recapco/emailreplyparser/blob/master/LICENSE
