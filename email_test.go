@@ -8,7 +8,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/recapco/emailreplyparser/Godeps/_workspace/src/github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestReadsSimpleBody(t *testing.T) {
